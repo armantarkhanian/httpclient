@@ -8,7 +8,7 @@ import (
 )
 
 func Get(url string, values map[string]string) ([]byte, error) {
-	if !strings.HasPrefix(url, "http://") && !strings.HasPrefix(link, "https://") {
+	if !strings.HasPrefix(url, "http://") && !strings.HasPrefix(url, "https://") {
 		url = "http://" + url
 	}
 	baseURL, err := neturl.Parse(url)
@@ -41,7 +41,7 @@ func Get(url string, values map[string]string) ([]byte, error) {
 }
 
 func Post(url string, values map[string]string) ([]byte, error) {
-	if !strings.HasPrefix(url, "http://") && !strings.HasPrefix(link, "https://") {
+	if !strings.HasPrefix(url, "http://") && !strings.HasPrefix(url, "https://") {
 		url = "http://" + url
 	}
 
