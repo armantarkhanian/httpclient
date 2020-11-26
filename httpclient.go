@@ -3,29 +3,30 @@ package httpclient
 import (
 	"io/ioutil"
 	"net/http"
-	neturl "net/url"
+	"net/url"
 	"strings"
 )
 
-func Get(url string, values map[string]string) ([]byte, error) {
-	if !strings.HasPrefix(url, "http://") && !strings.HasPrefix(url, "https://") {
-		url = "http://" + url
+func Get(URL string, values map[string]string) ([]byte, error) {
+	if !strings.HasPrefix(URL, "http://") && !strings.HasPrefix(URL, "https://") {
+		URL = "http://" + URL
 	}
-	baseURL, err := neturl.Parse(url)
+
+	baseURL, err := url.Parse(URL)
 	if err != nil {
 		return nil, err
 	}
 
-	params := neturl.Values{}
+	params := url.Values{}
 	for key, value := range values {
 		params.Add(key, value)
 	}
 
 	baseURL.RawQuery = params.Encode()
 
-	url = baseURL.String()
+	URL = baseURL.String()
 
-	resp, err := http.Get(url)
+	resp, err := http.Get(URL)
 	if err != nil {
 		return nil, err
 	}
@@ -40,17 +41,17 @@ func Get(url string, values map[string]string) ([]byte, error) {
 	return body, nil
 }
 
-func Post(url string, values map[string]string) ([]byte, error) {
-	if !strings.HasPrefix(url, "http://") && !strings.HasPrefix(url, "https://") {
-		url = "http://" + url
+func Post(URL string, values map[string]string) ([]byte, error) {
+	if !strings.HasPrefix(URL, "http://") && !strings.HasPrefix(URL, "https://") {
+		URL = "http://" + URL
 	}
 
-	params := neturl.Values{}
+	params := url.Values{}
 	for key, value := range values {
 		params.Add(key, value)
 	}
 
-	resp, err := http.PostForm(url, params)
+	resp, err := http.PostForm(URL, params)
 	if err != nil {
 		return nil, err
 	}
